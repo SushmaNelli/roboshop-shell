@@ -25,7 +25,7 @@ npm install &>>/tmp/roboshop.log
 echo -e "\e[33mSetup SystemD Service\e[0m"
 cp /home/centos/roboshop-shell/user.service /etc/systemd/system/user.service &>>/tmp/roboshop.log
 
-echo -e "\e[33mStart Catalogue Service\e[0m"
+echo -e "\e[33mStart User Service\e[0m"
 systemctl daemon-reload &>>/tmp/roboshop.log
 systemctl enable user &>>/tmp/roboshop.log
 systemctl start user &>>/tmp/roboshop.log
