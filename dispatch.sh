@@ -13,6 +13,7 @@ curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatc
 cd /app
 
 echo -e "\e[35mExtract Application content\e[0m"
+cd /app
 unzip /tmp/dispatch.zip
 
 echo -e "\e[36mSetup SystemD Dispatch Service\e[0m"
