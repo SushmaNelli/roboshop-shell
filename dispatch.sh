@@ -13,8 +13,13 @@ curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatc
 cd /app
 
 echo -e "\e[35mExtract Application content\e[0m"
-cd /app
 unzip /tmp/dispatch.zip
+
+echo -e "\e[31mDownload the dependencies\e[0m"
+cd /app
+go mod init dispatch &>>/tmp/roboshop.log
+go get &>>/tmp/roboshop.log
+go build &>>/tmp/roboshop.log
 
 echo -e "\e[36mSetup SystemD Dispatch Service\e[0m"
 cp /home/centos/roboshop-shell/dispatch.service /etc/systemd/system/dispatch.service &>>/tmp/roboshop.log
