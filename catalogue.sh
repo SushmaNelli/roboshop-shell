@@ -34,11 +34,11 @@ systemctl daemon-reload &>>/tmp/roboshop.log
 systemctl enable $component &>>/tmp/roboshop.log
 systemctl restart $component &>>/tmp/roboshop.log
 
-echo -e "${color}C opy Mongodb Repo file ${nocolor}"
+echo -e "${color}Copy Mongodb Repo file${nocolor}"
 cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 
-echo -e "${color} Install Mongodb-client ${nocolor}"
+echo -e "${color}Install Mongodb-client${nocolor}"
 yum install mongodb-org-shell -y &>>/tmp/roboshop.log
 
-echo -e "${color} Load Schema ${nocolor}"
+echo -e "${color}Load Schema${nocolor}"
 mongo --host mongodb-dev.sushma1923.pics </app/schema/$component.js &>>/tmp/roboshop.log
