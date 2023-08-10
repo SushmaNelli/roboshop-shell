@@ -2,43 +2,43 @@ component=catalogue
 color="\e[33m"
 nocolor="\e[0m"
 
-echo -e "${color}Configuring NodeJS Repos${nocolor}"
+echo -e "${color} Configuring NodeJS Repos ${nocolor}"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>/tmp/roboshop.log
 
-echo -e "${color}Install NodeJS${nocolor}"
+echo -e "${color} Install NodeJS ${nocolor}"
 yum install nodejs -y &>>/tmp/roboshop.log
 
-echo -e "${color}Add Application User${nocolor}"
+echo -e "${color} Add Application User ${nocolor}"
 useradd roboshop &>>/tmp/roboshop.log
 
-echo -e "${color}Remove Old Content and Create Application Directory${nocolor}"
+echo -e "${color} Remove Old Content and Create Application Directory ${nocolor}"
 rm -rf /app &>>/tmp/roboshop.log
 mkdir /app
 
-echo -e "${color}Download Application Content${nocolor}"
+echo -e "${color} Download Application Content ${nocolor}"
 curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>/tmp/roboshop.log
 cd /app
 
-echo -e "${color}Extract Application Content${nocolor}"
+echo -e "${color} Extract Application Content ${nocolor}"
 unzip /tmp/$component.zip &>>/tmp/roboshop.log
 cd /app
 
-echo -e "${color}Install NodeJS Dependencies${nocolor}"
+echo -e "${color} Install NodeJS Dependencies ${nocolor}"
 npm install &>>/tmp/roboshop.log
 
-echo -e "${color}Setup SystemD Service${nocolor}"
+echo -e "${color} Setup SystemD Service ${nocolor}"
 cp /home/centos/roboshop-shell/$component.service /etc/systemd/system/$component.service &>>/tmp/roboshop.log
 
-echo -e "${color}Start $component Service${nocolor}"
+echo -e "${color} Start $component Service ${nocolor}"
 systemctl daemon-reload &>>/tmp/roboshop.log
 systemctl enable $component &>>/tmp/roboshop.log
 systemctl restart $component &>>/tmp/roboshop.log
 
-echo -e "${color}Copy Mongodb Repo file${nocolor}"
+echo -e "${color}C opy Mongodb Repo file ${nocolor}"
 cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
 
-echo -e "${color}Install Mongodb-client${nocolor}"
+echo -e "${color} Install Mongodb-client ${nocolor}"
 yum install mongodb-org-shell -y &>>/tmp/roboshop.log
 
-echo -e "${color}Load Schema${nocolor}"
+echo -e "${color} Load Schema ${nocolor}"
 mongo --host mongodb-dev.sushma1923.pics </app/schema/$component.js &>>/tmp/roboshop.log
