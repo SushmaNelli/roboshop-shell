@@ -38,3 +38,14 @@ nodejs() {
   systemctl restart $component &>>${log_file}
 
 }
+
+mongo_schema_setup() {
+  echo -e "\e[33mCopy Mongodb Repo file\e[0m"
+  cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
+
+  echo -e "\e[33mInstall Mongodb-client\e[0m"
+  yum install mongodb-org-shell -y &>>/tmp/roboshop.log
+
+  echo -e "\e[33mLoad Schema\e[0m"
+  mongo --host mongodb-dev.sushma1923.pics </app/schema/user.js &>>/tmp/roboshop.log
+}
