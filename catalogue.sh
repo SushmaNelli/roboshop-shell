@@ -1,8 +1,5 @@
+source common.sh
 component=catalogue
-color="\e[36m"
-nocolor="\e[0m"
-log_file="/tmp/roboshop.log"
-app_path="/app"
 
 echo -e "${color} Configuring NodeJS Repos ${nocolor}"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
