@@ -1,4 +1,4 @@
-color="\e[32m"
+color="\e[354"
 nocolor="\e[0m"
 log_file="/tmp/roboshop.log"
 app_path="/app"
@@ -40,12 +40,12 @@ nodejs() {
 }
 
 mongo_schema_setup() {
-  echo -e "\e[33mCopy Mongodb Repo file\e[0m"
-  cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo &>>/tmp/roboshop.log
+  echo -e "${color}Copy Mongodb Repo file${nocolor}"
+  cp /home/centos/roboshop-shell/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
 
-  echo -e "\e[33mInstall Mongodb-client\e[0m"
-  yum install mongodb-org-shell -y &>>/tmp/roboshop.log
+  echo -e "${color}Install Mongodb-client${nocolor}"
+  yum install mongodb-org-shell -y &>>${log_file}
 
-  echo -e "\e[33mLoad Schema\e[0m"
-  mongo --host mongodb-dev.sushma1923.pics </app/schema/$component.js &>>/tmp/roboshop.log
+  echo -e "${color}Load Schema${nocolor}"
+  mongo --host mongodb-dev.sushma1923.pics <${app_path}/schema/$component.js &>>${log_file}
 }
