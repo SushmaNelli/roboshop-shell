@@ -1,4 +1,4 @@
-source common.sh
+
 
 echo -e "${color}Installing nginx${nocolor}"
 yum install nginx -y &>>/tmp/roboshop.log
