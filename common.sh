@@ -16,23 +16,25 @@ app_presetup() {
     echo -e "${color} Download Application Content ${nocolor}"
     curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>${log_file}
     cd ${app_path}
+    echo $?
 
     echo -e "${color} Extract Application Content ${nocolor}"
     unzip /tmp/$component.zip &>>${log_file}
     cd ${app_path}
-     echo $?
+    echo $?
 }
 
 systemd_setup() {
 
   echo -e "${color} Setup SystemD Service ${nocolor}"
   cp /home/centos/roboshop-shell/$component.service /etc/systemd/system/$component.service &>>${log_file}
+  cho $?
 
   echo -e "${color}Start $component service.${nocolor}"
   systemctl daemon-reload &>>${log_file}
   systemctl enable $component &>>${log_file}
   systemctl restart $component &>>${log_file}
-   echo $?
+  echo $?
 }
 
 nodejs() {
