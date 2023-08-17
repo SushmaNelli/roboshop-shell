@@ -15,7 +15,6 @@ app_presetup() {
      echo FAILURE
    fi
 
-
     echo -e "${color} Remove Old Content and Create Application Directory ${nocolor}"
     rm -rf ${app_path} &>>${log_file}
     mkdir ${app_path}
@@ -24,7 +23,6 @@ app_presetup() {
   else
     echo FAILURE
   fi
-
 
     echo -e "${color} Download Application Content ${nocolor}"
     curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>${log_file}
