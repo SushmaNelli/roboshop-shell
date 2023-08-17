@@ -28,7 +28,7 @@ systemd_setup() {
 
   echo -e "${color} Setup SystemD Service ${nocolor}"
   cp /home/centos/roboshop-shell/$component.service /etc/systemd/system/$component.service &>>${log_file}
-  cho $?
+  echo $?
 
   echo -e "${color}Start $component service.${nocolor}"
   systemctl daemon-reload &>>${log_file}
