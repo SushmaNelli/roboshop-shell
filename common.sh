@@ -5,13 +5,23 @@ app_path="/app"
 
 app_presetup() {
   echo -e "${color} Add Application User ${nocolor}"
-    useradd roboshop &>>${log_file}
-    echo $?
+  useradd roboshop &>>${log_file}
+   if [ $? -eq 0 ]; then
+     echo SUCCESS
+   else
+     echo FAILURE
+   fi
+
 
     echo -e "${color} Remove Old Content and Create Application Directory ${nocolor}"
     rm -rf ${app_path} &>>${log_file}
     mkdir ${app_path}
-    echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
+
 
     echo -e "${color} Download Application Content ${nocolor}"
     curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>${log_file}
@@ -20,7 +30,11 @@ app_presetup() {
     echo -e "${color} Extract Application Content ${nocolor}"
     unzip /tmp/$component.zip &>>${log_file}
     cd ${app_path}
-    echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 }
 
 systemd_setup() {
@@ -32,7 +46,12 @@ systemd_setup() {
   systemctl daemon-reload &>>${log_file}
   systemctl enable $component &>>${log_file}
   systemctl restart $component &>>${log_file}
-  echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
+
 }
 
 nodejs() {
@@ -88,14 +107,23 @@ maven() {
 python() {
  echo -e "${color}Install Python${nocolor}"
  yum install python36 gcc python3-devel -y &>>${log_file}
- echo $?
+  if [ $? -eq 0 ]; then
+    echo SUCCESS
+  else
+    echo FAILURE
+  fi
 
  app_presetup
 
  echo -e "${color}Install Application Dependencies${nocolor}"
  cd ${app_path}
  pip3.6 install -r requirements.txt &>>${log_file}
-  echo $?
+ if [ $? -eq 0 ]; then
+   echo SUCCESS
+ else
+   echo FAILURE
+ fi
+
 
  systemd_setup
 }
