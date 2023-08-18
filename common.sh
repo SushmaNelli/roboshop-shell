@@ -31,7 +31,7 @@ app_presetup() {
     curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>${log_file}
     cd ${app_path}
 
-      stat_check
+      stat_check $?
 
     echo -e "${color} Extract Application Content ${nocolor}"
     unzip /tmp/$component.zip &>>${log_file}
@@ -121,5 +121,6 @@ python() {
 
 stat_check $?
 
+sed -i -e "s/roboshop_app_password/$1" /home/centos/roboshop-shell/$component.service
  systemd_setup
 }
