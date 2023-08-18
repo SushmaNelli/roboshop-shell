@@ -5,7 +5,7 @@ app_path="/app"
 
 
 stat_check() {
-   if [ $1 -eq 0 ]; then
+   if [ $? -eq 0 ]; then
      echo SUCCESS
    else
      echo FAILURE
@@ -19,13 +19,13 @@ app_presetup() {
       useradd roboshop &>>${log_file}
     fi
 
-  stat_check
+  stat_check $?
 
     echo -e "${color} Remove Old Content and Create Application Directory ${nocolor}"
     rm -rf ${app_path} &>>${log_file}
     mkdir ${app_path}
 
- stat_check
+ stat_check $?
 
     echo -e "${color} Download Application Content ${nocolor}"
     curl -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>${log_file}
@@ -37,7 +37,7 @@ app_presetup() {
     unzip /tmp/$component.zip &>>${log_file}
     cd ${app_path}
 
- stat_check
+ stat_check $?
 
 }
 
@@ -46,14 +46,14 @@ systemd_setup() {
   echo -e "${color} Setup SystemD Service ${nocolor}"
   cp /home/centos/roboshop-shell/$component.service /etc/systemd/system/$component.service &>>${log_file}
 
-  stat_check
+  stat_check $?
 
   echo -e "${color}Start $component service.${nocolor}"
   systemctl daemon-reload &>>${log_file}
   systemctl enable $component &>>${log_file}
   systemctl restart $component &>>${log_file}
 
- stat_check
+ stat_check $?
 
 }
 
@@ -111,7 +111,7 @@ python() {
  echo -e "${color}Install Python${nocolor}"
  yum install python36 gcc python3-devel -y &>>${log_file}
 
- stat_check
+ stat_check $?
 
  app_presetup
 
@@ -119,7 +119,7 @@ python() {
  cd ${app_path}
  pip3.6 install -r requirements.txt &>>${log_file}
 
-stat_check
+stat_check $?
 
  systemd_setup
 }
