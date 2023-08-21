@@ -1,30 +1,40 @@
-echo -e "\e[31mInstall GoLang\e[0m"
-yum install golang -y &>>/tmp/roboshop.log
+source common.sh
 
-echo -e "\e[32mAdd application User\e[0m"
-useradd roboshop &>>/tmp/roboshop.log
+echo -e "${color}Install GoLang${nocolor}"
+yum install golang -y &>>${log_file}
+ stat_check $?
 
-echo -e "\e[33mRemove Old Content and Create Application Directory\e[0m"
-rm -rf /app &>>/tmp/roboshop.log
-mkdir /app &>>/tmp/roboshop.log
+echo -e "${color}Add application User${nocolor}"
+useradd roboshop &>>${log_file}
+ stat_check $?
 
-echo -e "\e[34mDownload application content\e[0m"
-curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch.zip &>>/tmp/roboshop.log
-cd /app
+echo -e "${color}Remove Old Content and Create Application Directory${nocolor}"
+rm -rf /app &>>${log_file}
+mkdir /app &>>${log_file}
+ stat_check $?
 
-echo -e "\e[35mExtract Application content\e[0m"
+echo -e "${color}Download application content${nocolor}"
+curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch.zip &>>${log_file}
+cd ${app_path}
+ stat_check $?
+
+echo -e "${color}Extract Application content${nocolor}"
 unzip /tmp/dispatch.zip
+ stat_check $?
 
-echo -e "\e[31mDownload the dependencies\e[0m"
-cd /app
-go mod init dispatch &>>/tmp/roboshop.log
-go get &>>/tmp/roboshop.log
-go build &>>/tmp/roboshop.log
+echo -e "${color}Download the dependencies${nocolor}"
+cd ${app_path}
+go mod init dispatch &>>${log_file}
+go get &>>${log_file}
+go build &>>${log_file}
+ stat_check $?
 
-echo -e "\e[36mSetup SystemD Dispatch Service\e[0m"
-cp /home/centos/roboshop-shell/dispatch.service /etc/systemd/system/dispatch.service &>>/tmp/roboshop.log
+echo -e "${color}Setup SystemD Dispatch Service${nocolor}"
+cp /home/centos/roboshop-shell/dispatch.service /etc/systemd/system/dispatch.service &>>${log_file}
+ stat_check $?
 
-echo -e "\e[32mStart Dispatch service\e[0m"
-systemctl daemon-reload &>>/tmp/roboshop.log
-systemctl enable dispatch &>>/tmp/roboshop.log
-systemctl restart dispatch &>>/tmp/roboshop.log
+echo -e "${color}Start Dispatch service${nocolor}"
+systemctl daemon-reload &>>${log_file}
+systemctl enable dispatch &>>${log_file}
+systemctl restart dispatch &>>${log_file}
+ stat_check $?

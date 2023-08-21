@@ -1,15 +1,22 @@
-echo -e "\e[32mInstall Redis Repos\e[0m"
-yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>/tmp/roboshop.log
+source common.sh
 
-echo -e "\e[32mEnable Redis 6.2 Version\e[0m"
-yum module enable redis:remi-6.2 -y &>>/tmp/roboshop.log
+echo -e "${color}Install Redis Repos${nocolor}"
+yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>${log_file}
+ stat_check $?
 
-echo -e "\e[32m Install Redis\e[0m"
-yum install redis -y &>>/tmp/roboshop.log
+echo -e "${color}Enable Redis 6.2 Version${nocolor}"
+yum module enable redis:remi-6.2 -y &>>${log_file}
+ stat_check $?
 
-echo -e "\e[32mUpdate Redis listen address\e[0m"
-sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis.conf /etc/redis/redis.conf &>>/tmp/roboshop.log
+echo -e "${color} Install Redis${nocolor}"
+yum install redis -y &>>${log_file}
+ stat_check $?
 
-echo -e "\e[32mStart Redis Service\e[0m"
-systemctl enable redis &>>/tmp/roboshop.log
-systemctl start redis &>>/tmp/roboshop.log
+echo -e "${color}Update Redis listen address${nocolor}"
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/redis.conf /etc/redis/redis.conf &>>${log_file}
+ stat_check $?
+
+echo -e "${color}Start Redis Service${nocolor}"
+systemctl enable redis &>>${log_file}
+systemctl start redis &>>${log_file}
+ stat_check $?
