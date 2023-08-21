@@ -76,10 +76,6 @@ nodejs() {
 
   systemd_setup
 
- id roboshop &>>${log_file}
-    if [ $? -eq 1 ]; then
-
-        fi
 }
 
 mongo_schema_setup() {
