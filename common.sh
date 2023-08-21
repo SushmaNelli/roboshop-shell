@@ -19,10 +19,7 @@ stat_check() {
 
 app_presetup() {
   echo -e "${color} Add Application User ${nocolor}"
- id roboshop &>>${log_file}
-    if [ $? -eq 1 ]; then
-      useradd roboshop &>>${log_file}
-    fi
+
 
   stat_check $?
 
@@ -76,7 +73,10 @@ nodejs() {
   npm install &>>${log_file}
 
   systemd_setup
-
+ id roboshop &>>${log_file}
+    if [ $? -eq 1 ]; then
+      useradd roboshop &>>${log_file}
+    fi
 }
 
 mongo_schema_setup() {
