@@ -4,26 +4,9 @@ echo -e "${color}Install GoLang${nocolor}"
 yum install golang -y &>>${log_file}
  stat_check $?
 
-echo -e "${color}Add application User${nocolor}"
-useradd roboshop &>>${log_file}
- stat_check $?
-
-echo -e "${color}Remove Old Content and Create Application Directory${nocolor}"
-rm -rf /app &>>${log_file}
-mkdir /app &>>${log_file}
- stat_check $?
-
-echo -e "${color}Download application content${nocolor}"
-curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch.zip &>>${log_file}
-cd ${app_path}
- stat_check $?
-
-echo -e "${color}Extract Application content${nocolor}"
-unzip ${log_file}
- stat_check $?
+app_presetup
 
 echo -e "${color}Download the dependencies${nocolor}"
-cd ${app_path}
 go mod init dispatch &>>${log_file}
 go get &>>${log_file}
 go build &>>${log_file}
