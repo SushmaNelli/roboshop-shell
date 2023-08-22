@@ -19,7 +19,7 @@ cd ${app_path}
  stat_check $?
 
 echo -e "${color}Extract Application content${nocolor}"
-unzip /tmp/dispatch.zip
+unzip ${log_file}
  stat_check $?
 
 echo -e "${color}Download the dependencies${nocolor}"

@@ -18,5 +18,5 @@ systemctl restart mysqld &>>${log_file}
  stat_check $?
 
 echo -e "${color}Setup Mysql Password${nocolor}"
-mysql_secure_installation --set-root-pass $1 &>>${log_file}
+mysql_secure_installation --set-root-pass ${mysql_root_password} &>>${log_file}
  stat_check $?
